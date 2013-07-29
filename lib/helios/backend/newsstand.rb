@@ -2,11 +2,13 @@ require 'rack/newsstand'
 
 require 'sinatra/base'
 require 'sinatra/param'
+require 'rack/contrib'
 
 require 'fog'
 
 class Helios::Backend::Newsstand < Sinatra::Base
   helpers Sinatra::Param
+  use Rack::PostBodyContentTypeParser
 
   def initialize(app, options = {}, &block)
     super(Rack::Newsstand.new)

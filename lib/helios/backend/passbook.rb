@@ -2,9 +2,11 @@ require 'rack/passbook'
 
 require 'sinatra/base'
 require 'sinatra/param'
+require 'rack/contrib'
 
 class Helios::Backend::Passbook < Sinatra::Base
   helpers Sinatra::Param
+  use Rack::PostBodyContentTypeParser
 
   def initialize(app, options = {}, &block)
     super(Rack::Passbook.new)

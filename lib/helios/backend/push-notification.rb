@@ -2,11 +2,14 @@ require 'rack/push-notification'
 
 require 'sinatra/base'
 require 'sinatra/param'
+require 'rack/contrib'
 
 require 'houston'
 
 class Helios::Backend::PushNotification < Sinatra::Base
   helpers Sinatra::Param
+  use Rack::PostBodyContentTypeParser
+
   attr_reader :apn_certificate, :apn_environment
 
   def initialize(app, options = {}, &block)
@@ -55,6 +58,18 @@ class Helios::Backend::PushNotification < Sinatra::Base
     end
   end
 
+  post '/devices/?' do
+    record = ::Rack::PushNotification::Device.new(params)
+
+    if record.save
+      status 201
+      {device: record}.to_json
+    else
+      status 400
+      {errors: record.errors}.to_json
+    end
+  end
+
   head '/message' do
     status 503 and return unless client
 
@@ -64,6 +79,7 @@ class Helios::Backend::PushNotification < Sinatra::Base
   post '/message' do
     status 503 and return unless client
 
+    binding.pry
     param :payload, String, empty: false
     param :tokens, Array, empty: false
 

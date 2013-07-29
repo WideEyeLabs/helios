@@ -343,7 +343,17 @@ You can start an IRB session with the runtime environment of the Helios applicat
 
 This command activates the services as configured by your Helios application, including any generated Core Data models. The `rack` module is automatically included on launch, allowing you to access everything more directly:
 
-    > Passbook::Passes.all # => [...]
+```ruby
+
+Rack::Passbook::Pass.all # => [...]
+Rack::InAppPurchase::Receipt.all # => [...]
+Rack::InAppPurchase::Product.all # => [...]
+Rack::PushNotification::Device.all # => [...]
+Rack::Newsstand::Issue.all # => [...]
+
+```
+    
+    
 
 ## Deploying to Heroku
 
