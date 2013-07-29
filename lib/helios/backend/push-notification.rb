@@ -79,7 +79,6 @@ class Helios::Backend::PushNotification < Sinatra::Base
   post '/message' do
     status 503 and return unless client
 
-    binding.pry
     param :payload, String, empty: false
     param :tokens, Array, empty: false
 

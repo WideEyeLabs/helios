@@ -6,7 +6,6 @@ require 'rack/scaffold'
 require 'sinatra/base'
 require 'sinatra/param'
 require 'rack/contrib'
-require 'pry'
 
 class Helios::Backend::Data < Sinatra::Base
   helpers Sinatra::Param
